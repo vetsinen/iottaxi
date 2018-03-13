@@ -3,7 +3,7 @@ var Route = /** @class */ (function () {
     }
     Route.stops = 5;
     Route.timeBetweenStops = 0.05;
-    Route.passangerFlowDencity = 2;
+    Route.passengerFlowDensity = 2;
     return Route;
 }());
 var Taxi = /** @class */ (function () {
@@ -17,7 +17,7 @@ var Taxi = /** @class */ (function () {
         return false;
     };
     Taxi.prototype.waitPassangers = function (quantity) {
-        Helpers.wait(quantity * Taxi.timeForPassanger);
+        Helpers.wait(quantity * Taxi.timeForPassenger);
     };
     Taxi.prototype.move = function () {
         while (!this.stopSignal()) {
@@ -42,7 +42,7 @@ var Taxi = /** @class */ (function () {
     };
     Taxi.prototype.next = function () {
         var outPeople = Helpers.rangedRandom(this.insiders);
-        var inPeople = Helpers.rangedRandom(Route.passangerFlowDencity);
+        var inPeople = Helpers.rangedRandom(Route.passengerFlowDensity);
         if (outPeople === 0 && this.insiders === Taxi.maxVolume)
             return;
         this.openDoors();
@@ -56,8 +56,8 @@ var Taxi = /** @class */ (function () {
         }
         this.waitPassangers(inPeople);
         this.insiders += inPeople;
-        Helpers.wait(0.5);
-        inPeople = Helpers.rangedRandom(Route.passangerFlowDencity);
+        Helpers.wait(60);
+        inPeople = Helpers.rangedRandom(Route.passengerFlowDensity);
         if (this.insiders + inPeople >= Taxi.maxVolume) {
             this.insiders = Taxi.maxVolume;
         }
@@ -66,7 +66,7 @@ var Taxi = /** @class */ (function () {
         }
         this.closeDoors();
     };
-    Taxi.timeForPassanger = 0.005;
+    Taxi.timeForPassenger = 0.005;
     Taxi.maxVolume = 10;
     return Taxi;
 }());

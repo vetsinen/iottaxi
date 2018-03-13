@@ -1,12 +1,12 @@
 class Route {
-    static stops = 5;
-    static timeBetweenStops = 0.05;
-    static passangerFlowDencity = 2;
+    public static readonly stops = 5;
+    public static readonly timeBetweenStops = 0.05;
+    public static readonly passengerFlowDensity = 2;
 }
 
 class Taxi {
-    private static timeForPassanger = 0.005;
-    private static maxVolume = 10;
+    private static readonly timeForPassenger = 0.005;
+    private static readonly maxVolume = 10;
 
     private insiders: number = 0;
     private stopIndex = 0;
@@ -20,7 +20,7 @@ class Taxi {
     }
 
     waitPassangers(quantity): void {
-        Helpers.wait(quantity * Taxi.timeForPassanger);
+        Helpers.wait(quantity * Taxi.timeForPassenger);
     }
 
     move(): void {
@@ -50,7 +50,7 @@ class Taxi {
 
     next(): void {
         let outPeople: number = Helpers.rangedRandom(this.insiders);
-        let inPeople: number = Helpers.rangedRandom(Route.passangerFlowDencity);
+        let inPeople: number = Helpers.rangedRandom(Route.passengerFlowDensity);
 
         if (outPeople === 0 && this.insiders === Taxi.maxVolume) return;
 
@@ -68,8 +68,8 @@ class Taxi {
         this.waitPassangers(inPeople);
         this.insiders += inPeople;
 
-        Helpers.wait(0.5);
-        inPeople = Helpers.rangedRandom(Route.passangerFlowDencity);
+        Helpers.wait(60);
+        inPeople = Helpers.rangedRandom(Route.passengerFlowDensity);
         if (this.insiders + inPeople >= Taxi.maxVolume) {
             this.insiders = Taxi.maxVolume;
         }
@@ -81,7 +81,7 @@ class Taxi {
 }
 
 class Helpers {
-    static currentTime(): string {
+    public static currentTime(): string {
         let today = new Date();
         let h = today.getHours();
         let m = today.getMinutes();
@@ -89,12 +89,12 @@ class Helpers {
         return '' + h + ':' + s + ':' + s;
     }
 
-    static rangedRandom(max): number {
+    public static rangedRandom(max: number): number {
         return Math.round(Math.random() * (max))
     }
 
-    static wait(s): void {
-        let start = new Date().getTime();
+    public static wait(s): void {
+        const start = new Date().getTime();
         let end = start;
         while (end < start + s * 1000) {
             end = new Date().getTime();
